@@ -1,17 +1,5 @@
 package gr.dsigned.atom.domain;
 
-//<link rel="alternate" href="http://prasinanea.gr/football/article104938.ece" /> 
-//<link rel="enclosure" type="image/jpeg" href="http://prasinanea.gr/incoming/article104874.ece/BINARY/w300/670245.jpg" title="" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104926.ece" title="Η Φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104935.ece" title="Η Φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104923.ece" title="Η φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104925.ece" title="Η φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104927.ece" title="Η Φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104920.ece" title="Οι Αμαζόνες του Τριφυλλιού πανηγυρίζουν με τους οργανωμένους φιλάθλους." /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104932.ece" title="Η Φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104929.ece" title="Η Φιέστα του Παναθηναϊκού" /> 
-//<link rel="related" type="text/html" href="http://prasinanea.gr/football/article104937.ece" title="Η Φιέστα του Παναθηναϊκού" />
-
 public class Link {
 
 	private String rel;

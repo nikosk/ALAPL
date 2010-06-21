@@ -2,8 +2,6 @@ package gr.dsigned.atom.parser;
 
 import gr.dsigned.atom.domain.Feed;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

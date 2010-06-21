@@ -15,8 +15,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-
-
 public class AtomParser {
 	private Feed feed = new Feed();
 	private final HashMap<String, String> attMap = new HashMap<String, String>();
@@ -42,27 +40,15 @@ public class AtomParser {
 		XmlPullParser parser = factory.newPullParser();
 		parser.setInput(in, null);
 		int eventType = parser.getEventType();
-		long start = System.currentTimeMillis();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			if (eventType == XmlPullParser.START_DOCUMENT) {
-				logParse("Beginning XML pullparse.");
-			} else if (eventType == XmlPullParser.START_TAG) {
+			if (eventType == XmlPullParser.START_TAG) {
 				String startTag = parser.getName();
 				if (FEED_TAG.equals(startTag)) {
-					logParse("Parsing a feed.");
 					processFeed(parser);
-				} else {
-					logParse("(parseNotesXml) unknown XML tag: <" + startTag + ">");
 				}
-			} else if (eventType == XmlPullParser.END_TAG) {
-				String endTag = parser.getName();
-				if (FEED_TAG.equals(endTag)) {
-					
-				}
-			}
+			} 
 			eventType = parser.next();
 		}
-		logParse("End parsing feed in : " + (System.currentTimeMillis()-start) );
 		return feed;
 	}
 
@@ -105,7 +91,6 @@ public class AtomParser {
 			} else if (eventType == XmlPullParser.END_TAG) {
 				String endTag = parser.getName();
 				if (FEED_TAG.equals(endTag)) {
-					logParse("Parsing note complete.");
 					break;
 				}
 			}
@@ -116,7 +101,6 @@ public class AtomParser {
 	private void processEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
 		int eventType = parser.getEventType();
 		Entry entry = new Entry();
-
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
 				String startTag = parser.getName();
@@ -131,14 +115,14 @@ public class AtomParser {
 					link.setType(attMap.get("type"));
 					link.setVia(attMap.get("via"));
 					entry.addLink(link);
-				} else if (CATEGORY_TAG.equals(startTag)){
+				} else if (CATEGORY_TAG.equals(startTag)) {
 					getAttributeMap(parser);
 					Category cat = new Category();
 					cat.setLabel(attMap.get("label"));
 					cat.setTerm(attMap.get("term"));
-				} else if (ID_TAG.equals(startTag)){
+				} else if (ID_TAG.equals(startTag)) {
 					entry.setId(parser.nextText());
-				} else if (UPDATED_TAG.equals(startTag)){
+				} else if (UPDATED_TAG.equals(startTag)) {
 					String updated = parser.nextText();
 					try {
 						updated = updated.trim();
@@ -154,9 +138,9 @@ public class AtomParser {
 							}
 						}
 					}
-				} else if (SUMMARY_TAG.equals(startTag)){
+				} else if (SUMMARY_TAG.equals(startTag)) {
 					entry.setSummary(parser.nextText());
-				} else if(CONTENT_ENCODED_TAG.equals(startTag)||CONTENT_TAG.equals(startTag) || CONTENT_ENCODED_ALT_TAG.equals(startTag)){
+				} else if (CONTENT_ENCODED_TAG.equals(startTag) || CONTENT_TAG.equals(startTag) || CONTENT_ENCODED_ALT_TAG.equals(startTag)) {
 					entry.setContent(parser.nextText());
 				}
 
@@ -164,16 +148,11 @@ public class AtomParser {
 				String endTag = parser.getName();
 				if (ENTRY_TAG.equals(endTag)) {
 					feed.addEnty(entry);
-					logParse("Parsing entry complete.");
 					break;
 				}
 			}
 			eventType = parser.next();
 		}
-	}
-
-	private void logParse(String text) {
-		// Insert your logging code here.
 	}
 
 	private void getAttributeMap(XmlPullParser parser) {
