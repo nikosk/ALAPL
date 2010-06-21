@@ -3,17 +3,29 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>gr.dsigned</groupId>
-	<artifactId>atom</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>alapl</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>atom</name>
-	<url>http://maven.apache.org</url>
+	<name>alapl</name>
+	<url>http://github.com/nikosk/ALAPL</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<issueManagement>
+		<system>Github.org</system>
+		<url>http://github.com/nikosk/ALAPL/issues</url>
+	</issueManagement>
+	<scm>
+		<developerConnection>nikosk</developerConnection>
+		<url>http://github.com/nikosk/ALAPL</url>
+	</scm>
+	<organization>
+		<name>dsigned.gr</name>
+		<url>http://dsigned.gr</url>
+	</organization>
 	<dependencies>
 		<dependency>
 			<groupId>xmlpull</groupId>
