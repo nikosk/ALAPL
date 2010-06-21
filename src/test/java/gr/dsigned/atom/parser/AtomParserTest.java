@@ -24,7 +24,7 @@ public class AtomParserTest extends TestCase {
 
 	public void testParseFile() throws XmlPullParserException, IOException {
 		AtomParser parser = new AtomParser();
-		InputStream in = new FileInputStream(new File("/home/nk/workspace2/atom/src/test/java/gr/dsigned/atom/parser/AtomTestFeed.xml"));
+		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		Feed feed = parser.parse(in);
 		assertNotNull(feed);
 		assertTrue(feed.getEntries().size() > 0);
