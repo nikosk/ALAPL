@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class Entry {
 
     private String id;
     private String title;
     private String url;
     private Date updated;
+    private String updatedString;
     private Date published;
+    private String publishedString;
     private String summary;
     private String content;
     private List<String> authors = new ArrayList<String>();
@@ -102,12 +103,89 @@ public class Entry {
         this.url = url;
     }
 
+    public String getPublishedString() {
+        return publishedString;
+    }
+
+    public void setPublishedString(String publishedString) {
+        this.publishedString = publishedString;
+    }
+
+    public String getUpdatedString() {
+        return updatedString;
+    }
+
+    public void setUpdatedString(String updatedString) {
+        this.updatedString = updatedString;
+    }
+
+    
+
     @Override
     public String toString() {
-        return "Entry [authors=" + authors + ", catogories=" + catogories
-                + ", content=" + content + ", id=" + id + ", links=" + links
-                + ", published=" + published + ", summary=" + summary
-                + ", url=" + url
-                + ", title=" + title + ", updated=" + updated + "]";
+        StringBuilder toStringBuilder = new StringBuilder();
+        toStringBuilder.append(super.toString());
+        toStringBuilder.append("\n");
+        toStringBuilder.append("\nid: ");
+        toStringBuilder.append(id);
+        toStringBuilder.append("\ntitle: ");
+        toStringBuilder.append(title);
+        toStringBuilder.append("\nurl: ");
+        toStringBuilder.append(url);
+        toStringBuilder.append("\nupdated: ");
+        toStringBuilder.append(updated);
+        toStringBuilder.append("\nupdatedString: ");
+        toStringBuilder.append(updatedString);
+        toStringBuilder.append("\npublished: ");
+        toStringBuilder.append(published);
+        toStringBuilder.append("\npublishedString: ");
+        toStringBuilder.append(publishedString);
+        toStringBuilder.append("\nsummary: ");
+        toStringBuilder.append(summary);
+        toStringBuilder.append("\ncontent: ");
+        toStringBuilder.append(content);
+        toStringBuilder.append("\nauthors: ");
+        if (authors != null) {
+            toStringBuilder.append("\nSize: ");
+            toStringBuilder.append(authors.size());
+            java.util.Iterator collectionIiterator = authors.iterator();
+            for (int i = 0; collectionIiterator.hasNext(); ++i) {
+                toStringBuilder.append("\nIndex ");
+                toStringBuilder.append(i);
+                toStringBuilder.append(": ");
+                toStringBuilder.append(collectionIiterator.next());
+            }
+        } else {
+            toStringBuilder.append("NULL");
+        }
+        toStringBuilder.append("\ncatogories: ");
+        if (catogories != null) {
+            toStringBuilder.append("\nSize: ");
+            toStringBuilder.append(catogories.size());
+            java.util.Iterator collectionIiterator = catogories.iterator();
+            for (int i = 0; collectionIiterator.hasNext(); ++i) {
+                toStringBuilder.append("\nIndex ");
+                toStringBuilder.append(i);
+                toStringBuilder.append(": ");
+                toStringBuilder.append(collectionIiterator.next());
+            }
+        } else {
+            toStringBuilder.append("NULL");
+        }
+        toStringBuilder.append("\nlinks: ");
+        if (links != null) {
+            toStringBuilder.append("\nSize: ");
+            toStringBuilder.append(links.size());
+            java.util.Iterator collectionIiterator = links.iterator();
+            for (int i = 0; collectionIiterator.hasNext(); ++i) {
+                toStringBuilder.append("\nIndex ");
+                toStringBuilder.append(i);
+                toStringBuilder.append(": ");
+                toStringBuilder.append(collectionIiterator.next());
+            }
+        } else {
+            toStringBuilder.append("NULL");
+        }
+        return toStringBuilder.toString();
     }
 }
