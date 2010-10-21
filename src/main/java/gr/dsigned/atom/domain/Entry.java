@@ -148,7 +148,7 @@ public class Entry {
         if (authors != null) {
             toStringBuilder.append("\nSize: ");
             toStringBuilder.append(authors.size());
-            java.util.Iterator collectionIiterator = authors.iterator();
+            java.util.Iterator<String> collectionIiterator = authors.iterator();
             for (int i = 0; collectionIiterator.hasNext(); ++i) {
                 toStringBuilder.append("\nIndex ");
                 toStringBuilder.append(i);
@@ -162,7 +162,7 @@ public class Entry {
         if (catogories != null) {
             toStringBuilder.append("\nSize: ");
             toStringBuilder.append(catogories.size());
-            java.util.Iterator collectionIiterator = catogories.iterator();
+            java.util.Iterator<Category> collectionIiterator = catogories.iterator();
             for (int i = 0; collectionIiterator.hasNext(); ++i) {
                 toStringBuilder.append("\nIndex ");
                 toStringBuilder.append(i);
@@ -176,7 +176,7 @@ public class Entry {
         if (links != null) {
             toStringBuilder.append("\nSize: ");
             toStringBuilder.append(links.size());
-            java.util.Iterator collectionIiterator = links.iterator();
+            java.util.Iterator<Link> collectionIiterator = links.iterator();
             for (int i = 0; collectionIiterator.hasNext(); ++i) {
                 toStringBuilder.append("\nIndex ");
                 toStringBuilder.append(i);
