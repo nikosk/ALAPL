@@ -41,7 +41,7 @@ public class AtomParser {
 		AtomParserTimeOut apt = new AtomParserTimeOut(in);
 		new Thread(apt).start();
 		long startTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - startTime < timeOut && apt.getFeed() == null);
+		while(apt.getFeed() == null && System.currentTimeMillis() - startTime < timeOut);
 		return apt.getFeed();
 	}
 
@@ -134,6 +134,7 @@ public class AtomParser {
 					Category cat = new Category();
 					cat.setLabel(attMap.get("label"));
 					cat.setTerm(attMap.get("term"));
+					entry.addCatogory(cat);
 				} else if (ID_TAG.equals(startTag)) {
 					entry.setId(parser.nextText());
 				} else if (UPDATED_TAG.equals(startTag)) {

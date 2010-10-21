@@ -27,7 +27,10 @@ public class AtomParserTest extends TestCase {
 		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		Feed feed = parser.parse(in);
 		assertNotNull(feed);
+		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
+		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
+		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);
 	}
 
 	public void testParseDatesTrue() throws XmlPullParserException, IOException {
@@ -45,15 +48,23 @@ public class AtomParserTest extends TestCase {
 		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		Feed feed = parser.parse(in);
 		assertNotNull(feed);
+		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
+		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
+		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);
 	}
 
 	public void testTimeout() throws XmlPullParserException, IOException {
 		AtomParser parser = new AtomParser();
 		InputStream in = new DelayingInputStream();
-		assertNull(parser.parse(in,100));
-		in =  this.getClass().getResource("AtomTestFeed.xml").openStream();
-		assertNotNull(parser.parse(in,20000));
+		assertNull(parser.parse(in, 100));
+		in = this.getClass().getResource("AtomTestFeed.xml").openStream();
+		Feed feed = parser.parse(in, 5000);
+		assertNotNull(feed);
+		assertNotNull(feed.getEntries());
+		assertTrue(feed.getEntries().size() > 0);
+		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
+		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);
 	}
 
 	private class DelayingInputStream extends InputStream {

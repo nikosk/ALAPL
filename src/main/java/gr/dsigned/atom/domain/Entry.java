@@ -82,7 +82,9 @@ public class Entry {
     public void setCatogories(List<Category> catogories) {
         this.catogories = catogories;
     }
-
+    public void addCatogory(Category catogory) {
+        this.catogories.add(catogory);
+    }
     public List<Link> getLinks() {
         return links;
     }
@@ -119,7 +121,6 @@ public class Entry {
         this.updatedString = updatedString;
     }
 
-    
 
     @Override
     public String toString() {
