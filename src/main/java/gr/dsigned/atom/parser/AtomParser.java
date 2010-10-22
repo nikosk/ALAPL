@@ -16,10 +16,12 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 public class AtomParser {
-	private Feed feed = new Feed();
-	private final HashMap<String, String> attMap = new HashMap<String, String>();
-	protected static final SimpleDateFormat ISO8601_DATE_FORMATS[] = new SimpleDateFormat[] { new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz"), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'") };
 
+	private Feed feed = new Feed();
+	private boolean parseDates = true;
+	private final HashMap<String, String> attMap = new HashMap<String, String>();
+	protected static final SimpleDateFormat ISO8601_DATE_FORMATS[] = new SimpleDateFormat[] { new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz"), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"),
+			new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'") };
 	private static final String FEED_TAG = "feed";
 	private static final String TITLE_TAG = "title";
 	private static final String LINK_TAG = "link";
@@ -33,6 +35,15 @@ public class AtomParser {
 	private static final String CONTENT_TAG = "content";
 	private static final String CONTENT_ENCODED_TAG = "content:encoded";
 	private static final String CONTENT_ENCODED_ALT_TAG = "encoded";
+	
+
+	public Feed parse(InputStream in, long timeOut) {
+		AtomParserTimeOut apt = new AtomParserTimeOut(in);
+		new Thread(apt).start();
+		long startTime = System.currentTimeMillis();
+		while(apt.getFeed() == null && System.currentTimeMillis() - startTime < timeOut);
+		return apt.getFeed();
+	}
 
 	public Feed parse(InputStream in) throws XmlPullParserException, IOException {
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -46,7 +57,7 @@ public class AtomParser {
 				if (FEED_TAG.equals(startTag)) {
 					processFeed(parser);
 				}
-			} 
+			}
 			eventType = parser.next();
 		}
 		return feed;
@@ -70,20 +81,23 @@ public class AtomParser {
 					feed.setIcon(parser.nextText());
 				} else if (UPDATED_TAG.equals(startTag)) {
 					String updated = parser.nextText();
-					try {
-						updated = updated.trim();
-						feed.setUpdated(ISO8601_DATE_FORMATS[0].parse(updated));
-					} catch (ParseException pe1) {
+					if (parseDates) {
 						try {
-							feed.setUpdated(ISO8601_DATE_FORMATS[1].parse(updated));
-						} catch (ParseException pe2) {
+							updated = updated.trim();
+							feed.setUpdated(ISO8601_DATE_FORMATS[0].parse(updated));
+						} catch (ParseException pe1) {
 							try {
-								feed.setUpdated(ISO8601_DATE_FORMATS[2].parse(updated));
-							} catch (ParseException pe3) {
-								// no big deal, stay silent
+								feed.setUpdated(ISO8601_DATE_FORMATS[1].parse(updated));
+							} catch (ParseException pe2) {
+								try {
+									feed.setUpdated(ISO8601_DATE_FORMATS[2].parse(updated));
+								} catch (ParseException pe3) {
+									// no big deal, stay silent
+								}
 							}
 						}
 					}
+					feed.setUpdatedString(updated);
 				} else if (ENTRY_TAG.equals(startTag)) {
 					processEntry(parser);
 				}
@@ -120,24 +134,28 @@ public class AtomParser {
 					Category cat = new Category();
 					cat.setLabel(attMap.get("label"));
 					cat.setTerm(attMap.get("term"));
+					entry.addCatogory(cat);
 				} else if (ID_TAG.equals(startTag)) {
 					entry.setId(parser.nextText());
 				} else if (UPDATED_TAG.equals(startTag)) {
 					String updated = parser.nextText();
-					try {
-						updated = updated.trim();
-						entry.setUpdated(ISO8601_DATE_FORMATS[0].parse(updated));
-					} catch (ParseException pe1) {
+					if (parseDates) {
 						try {
-							entry.setUpdated(ISO8601_DATE_FORMATS[1].parse(updated));
-						} catch (ParseException pe2) {
+							updated = updated.trim();
+							entry.setUpdated(ISO8601_DATE_FORMATS[0].parse(updated));
+						} catch (ParseException pe1) {
 							try {
-								entry.setUpdated(ISO8601_DATE_FORMATS[2].parse(updated));
-							} catch (ParseException pe3) {
-								// no big deal, stay silent
+								entry.setUpdated(ISO8601_DATE_FORMATS[1].parse(updated));
+							} catch (ParseException pe2) {
+								try {
+									entry.setUpdated(ISO8601_DATE_FORMATS[2].parse(updated));
+								} catch (ParseException pe3) {
+									// no big deal, stay silent
+								}
 							}
 						}
 					}
+					entry.setUpdatedString(updated);
 				} else if (SUMMARY_TAG.equals(startTag)) {
 					entry.setSummary(parser.nextText());
 				} else if (CONTENT_ENCODED_TAG.equals(startTag) || CONTENT_TAG.equals(startTag) || CONTENT_ENCODED_ALT_TAG.equals(startTag)) {
@@ -161,4 +179,30 @@ public class AtomParser {
 			attMap.put(parser.getAttributeName(i), parser.getAttributeValue(i));
 		}
 	}
+
+	public void setParseDates(boolean parseDates) {
+		this.parseDates = parseDates;
+	}
+
+	public class AtomParserTimeOut implements Runnable {
+		private InputStream in;
+		private Feed feed;
+
+		public AtomParserTimeOut(InputStream in) {
+			this.in = in;	
+		}
+
+		public void run() {
+			AtomParser parser = new AtomParser();
+			try {
+				feed = parser.parse(in);
+			} catch (Exception e) {
+			}
+		}
+
+		public Feed getFeed() {
+			return feed;
+		}
+	}
+
 }
