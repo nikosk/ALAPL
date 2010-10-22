@@ -41,7 +41,10 @@ public class AtomParser {
 		AtomParserTimeOut apt = new AtomParserTimeOut(in);
 		new Thread(apt).start();
 		long startTime = System.currentTimeMillis();
-		while(apt.getFeed() == null && System.currentTimeMillis() - startTime < timeOut);
+		long elapsedTime = System.currentTimeMillis();
+		while(apt.getFeed() == null && elapsedTime - startTime < timeOut){
+			elapsedTime = System.currentTimeMillis();
+		}
 		return apt.getFeed();
 	}
 
@@ -197,10 +200,11 @@ public class AtomParser {
 			try {
 				feed = parser.parse(in);
 			} catch (Exception e) {
+				System.out.println(e);
 			}
 		}
 
-		public Feed getFeed() {
+		public synchronized Feed getFeed() {
 			return feed;
 		}
 	}

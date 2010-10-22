@@ -58,13 +58,17 @@ public class AtomParserTest extends TestCase {
 		AtomParser parser = new AtomParser();
 		InputStream in = new DelayingInputStream();
 		assertNull(parser.parse(in, 100));
-		in = this.getClass().getResource("AtomTestFeed.xml").openStream();
+		in = this.getClass().getResource("AtomTestFeed.xml").openStream();		
 		Feed feed = parser.parse(in, 5000);
 		assertNotNull(feed);
+		System.out.println(feed);
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
 		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);
+		in = new URL("http://feeds.huffingtonpost.com/huffingtonpost/raw_feed").openStream();
+		feed = parser.parse(in, 1000);
+		assertNotNull(feed.getEntries()); // this test might fail, timeout is too low and it needs a working connection
 	}
 
 	private class DelayingInputStream extends InputStream {
