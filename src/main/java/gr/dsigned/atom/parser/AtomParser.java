@@ -28,6 +28,7 @@ public class AtomParser {
 	private static final String SUBTITLE_TAG = "subtitle";
 	private static final String ICON_TAG = "icon";
 	private static final String UPDATED_TAG = "updated";
+	private static final String PUBLISHED_TAG = "published";
 	private static final String ENTRY_TAG = "entry";
 	private static final String CATEGORY_TAG = "category";
 	private static final String ID_TAG = "id";
@@ -139,7 +140,26 @@ public class AtomParser {
 					cat.setTerm(attMap.get("term"));
 					entry.addCatogory(cat);
 				} else if (ID_TAG.equals(startTag)) {
-					entry.setId(parser.nextText());
+					entry.setId(parser.nextText());					
+				}else if(PUBLISHED_TAG.equals(startTag)){
+					String published = parser.nextText();
+					if (parseDates) {
+						try {
+							published = published.trim();
+							entry.setPublished(ISO8601_DATE_FORMATS[0].parse(published));
+						} catch (ParseException pe1) {
+							try {
+								entry.setPublished(ISO8601_DATE_FORMATS[1].parse(published));
+							} catch (ParseException pe2) {
+								try {
+									entry.setPublished(ISO8601_DATE_FORMATS[2].parse(published));
+								} catch (ParseException pe3) {
+									// no big deal, stay silent
+								}
+							}
+						}
+					}
+					entry.setPublishedString(published);
 				} else if (UPDATED_TAG.equals(startTag)) {
 					String updated = parser.nextText();
 					if (parseDates) {

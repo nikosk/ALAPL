@@ -19,6 +19,10 @@ public class AtomParserTest extends TestCase {
 		Feed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
 		assertTrue(feed.getEntries().size() > 0);
+		assertTrue(feed.getEntries().get(0).getPublished() == null);
+		assertTrue(feed.getEntries().get(0).getPublishedString() != null);
+		assertTrue(feed.getEntries().get(0).getUpdated() == null);
+		assertTrue(feed.getEntries().get(0).getUpdatedString() != null);
 	}
 
 	public void testParseFile() throws XmlPullParserException, IOException {
@@ -30,7 +34,7 @@ public class AtomParserTest extends TestCase {
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
-		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);
+		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);		
 	}
 
 	public void testParseDatesTrue() throws XmlPullParserException, IOException {
@@ -40,6 +44,10 @@ public class AtomParserTest extends TestCase {
 		Feed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
 		assertTrue(feed.getEntries().size() > 0);
+		assertTrue(feed.getEntries().get(0).getPublished() != null);
+		assertTrue(feed.getEntries().get(0).getPublishedString() != null);
+		assertTrue(feed.getEntries().get(0).getUpdated() != null);
+		assertTrue(feed.getEntries().get(0).getUpdatedString() != null);
 	}
 
 	public void testParseFileParseDatesTrue() throws XmlPullParserException, IOException {
