@@ -1,9 +1,9 @@
 package gr.dsigned.atom.parser;
 
-import gr.dsigned.atom.domain.Category;
-import gr.dsigned.atom.domain.Entry;
-import gr.dsigned.atom.domain.Feed;
-import gr.dsigned.atom.domain.Link;
+import gr.dsigned.atom.domain.AtomCategory;
+import gr.dsigned.atom.domain.AtomEntry;
+import gr.dsigned.atom.domain.AtomFeed;
+import gr.dsigned.atom.domain.AtomLink;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class AtomParser {
 
-	private Feed feed = new Feed();
+	private AtomFeed feed = new AtomFeed();
 	private boolean parseDates = true;
 	private final HashMap<String, String> attMap = new HashMap<String, String>();
 	protected static final SimpleDateFormat ISO8601_DATE_FORMATS[] = new SimpleDateFormat[] { new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz"), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"),
@@ -38,7 +38,7 @@ public class AtomParser {
 	private static final String CONTENT_ENCODED_ALT_TAG = "encoded";
 	
 
-	public Feed parse(InputStream in, long timeOut) {
+	public AtomFeed parse(InputStream in, long timeOut) {
 		AtomParserTimeOut apt = new AtomParserTimeOut(in);
 		new Thread(apt).start();
 		long startTime = System.currentTimeMillis();
@@ -49,7 +49,7 @@ public class AtomParser {
 		return apt.getFeed();
 	}
 
-	public Feed parse(InputStream in) throws XmlPullParserException, IOException {
+	public AtomFeed parse(InputStream in) throws XmlPullParserException, IOException {
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 		factory.setNamespaceAware(true);
 		XmlPullParser parser = factory.newPullParser();
@@ -118,7 +118,7 @@ public class AtomParser {
 
 	private void processEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
 		int eventType = parser.getEventType();
-		Entry entry = new Entry();
+		AtomEntry entry = new AtomEntry();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
 				String startTag = parser.getName();
@@ -126,7 +126,7 @@ public class AtomParser {
 					entry.setTitle(parser.nextText());
 				} else if (LINK_TAG.equals(startTag)) {
 					getAttributeMap(parser);
-					Link link = new Link();
+					AtomLink link = new AtomLink();
 					link.setRel(attMap.get("rel"));
 					link.setHref(attMap.get("href"));
 					link.setTitle(attMap.get("title"));
@@ -135,7 +135,7 @@ public class AtomParser {
 					entry.addLink(link);
 				} else if (CATEGORY_TAG.equals(startTag)) {
 					getAttributeMap(parser);
-					Category cat = new Category();
+					AtomCategory cat = new AtomCategory();
 					cat.setLabel(attMap.get("label"));
 					cat.setTerm(attMap.get("term"));
 					entry.addCatogory(cat);
@@ -209,7 +209,7 @@ public class AtomParser {
 
 	public class AtomParserTimeOut implements Runnable {
 		private InputStream in;
-		private Feed feed;
+		private AtomFeed feed;
 
 		public AtomParserTimeOut(InputStream in) {
 			this.in = in;	
@@ -224,7 +224,7 @@ public class AtomParser {
 			}
 		}
 
-		public synchronized Feed getFeed() {
+		public synchronized AtomFeed getFeed() {
 			return feed;
 		}
 	}

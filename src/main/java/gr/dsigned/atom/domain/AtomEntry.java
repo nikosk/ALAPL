@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Entry {
+public class AtomEntry {
 
     private String id;
     private String title;
@@ -16,8 +16,8 @@ public class Entry {
     private String summary;
     private String content;
     private List<String> authors = new ArrayList<String>();
-    private List<Category> catogories = new ArrayList<Category>();
-    private List<Link> links = new ArrayList<Link>();
+    private List<AtomCategory> catogories = new ArrayList<AtomCategory>();
+    private List<AtomLink> links = new ArrayList<AtomLink>();
 
     public String getId() {
         return id;
@@ -75,25 +75,25 @@ public class Entry {
         this.authors = authors;
     }
 
-    public List<Category> getCatogories() {
+    public List<AtomCategory> getCatogories() {
         return catogories;
     }
 
-    public void setCatogories(List<Category> catogories) {
+    public void setCatogories(List<AtomCategory> catogories) {
         this.catogories = catogories;
     }
-    public void addCatogory(Category catogory) {
+    public void addCatogory(AtomCategory catogory) {
         this.catogories.add(catogory);
     }
-    public List<Link> getLinks() {
+    public List<AtomLink> getLinks() {
         return links;
     }
 
-    public void setLinks(List<Link> links) {
+    public void setLinks(List<AtomLink> links) {
         this.links = links;
     }
 
-    public void addLink(Link link) {
+    public void addLink(AtomLink link) {
         this.links.add(link);
     }
 
@@ -163,7 +163,7 @@ public class Entry {
         if (catogories != null) {
             toStringBuilder.append("\nSize: ");
             toStringBuilder.append(catogories.size());
-            java.util.Iterator<Category> collectionIiterator = catogories.iterator();
+            java.util.Iterator<AtomCategory> collectionIiterator = catogories.iterator();
             for (int i = 0; collectionIiterator.hasNext(); ++i) {
                 toStringBuilder.append("\nIndex ");
                 toStringBuilder.append(i);
@@ -177,7 +177,7 @@ public class Entry {
         if (links != null) {
             toStringBuilder.append("\nSize: ");
             toStringBuilder.append(links.size());
-            java.util.Iterator<Link> collectionIiterator = links.iterator();
+            java.util.Iterator<AtomLink> collectionIiterator = links.iterator();
             for (int i = 0; collectionIiterator.hasNext(); ++i) {
                 toStringBuilder.append("\nIndex ");
                 toStringBuilder.append(i);

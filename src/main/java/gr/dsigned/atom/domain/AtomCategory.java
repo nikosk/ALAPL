@@ -1,6 +1,6 @@
 package gr.dsigned.atom.domain;
 
-public class Category {
+public class AtomCategory {
 
 	private String term;
 	private String label;

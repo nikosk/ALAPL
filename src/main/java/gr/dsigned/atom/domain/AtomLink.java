@@ -1,6 +1,6 @@
 package gr.dsigned.atom.domain;
 
-public class Link {
+public class AtomLink {
 
 	private String rel;
 	private String type;

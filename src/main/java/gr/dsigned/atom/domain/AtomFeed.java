@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Feed {
+public class AtomFeed {
 
     private String id;
     private String mURL;
@@ -13,10 +13,10 @@ public class Feed {
     private String icon;
     private Date updated;
     private String updatedString;
-    private List<Entry> entries;
+    private List<AtomEntry> entries;
 
-    public Feed() {
-        this.entries = new ArrayList<Entry>();
+    public AtomFeed() {
+        this.entries = new ArrayList<AtomEntry>();
     }
 
     public String getmURL() {
@@ -35,15 +35,15 @@ public class Feed {
         this.mTitle = mTitle;
     }
 
-    public List<Entry> getEntries() {
+    public List<AtomEntry> getEntries() {
         return entries;
     }
 
-    public void setEntries(List<Entry> entries) {
+    public void setEntries(List<AtomEntry> entries) {
         this.entries = entries;
     }
 
-    public void addEnty(Entry entry) {
+    public void addEnty(AtomEntry entry) {
         this.entries.add(entry);
     }
 
