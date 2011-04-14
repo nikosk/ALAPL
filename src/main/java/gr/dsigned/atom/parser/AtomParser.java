@@ -206,6 +206,7 @@ public class AtomParser {
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
 				String startTag = parser.getName();
+                System.out.println("Out: " + startTag);
 				if (NAME_TAG.equals(startTag)) {
 					authorName = parser.nextText();
 				} 
