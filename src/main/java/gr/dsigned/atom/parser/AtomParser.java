@@ -36,6 +36,8 @@ public class AtomParser {
 	private static final String CONTENT_TAG = "content";
 	private static final String CONTENT_ENCODED_TAG = "content:encoded";
 	private static final String CONTENT_ENCODED_ALT_TAG = "encoded";
+	private static final String AUTHOR_TAG = "author";
+	private static final String NAME_TAG = "name";
 	
 
 	public AtomFeed parse(InputStream in, long timeOut) {
@@ -139,9 +141,11 @@ public class AtomParser {
 					cat.setLabel(attMap.get("label"));
 					cat.setTerm(attMap.get("term"));
 					entry.addCatogory(cat);
+				} else if (AUTHOR_TAG.equals(startTag)) {
+					processAuthor(entry, parser);
 				} else if (ID_TAG.equals(startTag)) {
 					entry.setId(parser.nextText());					
-				}else if(PUBLISHED_TAG.equals(startTag)){
+				} else if(PUBLISHED_TAG.equals(startTag)){
 					String published = parser.nextText();
 					if (parseDates) {
 						try {
@@ -189,6 +193,26 @@ public class AtomParser {
 				String endTag = parser.getName();
 				if (ENTRY_TAG.equals(endTag)) {
 					feed.addEnty(entry);
+					break;
+				}
+			}
+			eventType = parser.next();
+		}
+	}
+	
+	private void processAuthor(AtomEntry entry, XmlPullParser parser) throws XmlPullParserException, IOException {
+		int eventType = parser.getEventType();
+		String authorName = "";
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			if (eventType == XmlPullParser.START_TAG) {
+				String startTag = parser.getName();
+				if (NAME_TAG.equals(startTag)) {
+					authorName = parser.nextText();
+				} 
+			} else if (eventType == XmlPullParser.END_TAG) {
+				String endTag = parser.getName();
+				if (AUTHOR_TAG.equals(endTag)) {
+					entry.getAuthors().add(authorName);
 					break;
 				}
 			}

@@ -48,6 +48,7 @@ public class AtomParserTest extends TestCase {
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
 		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);		
+		assertEquals(feed.getEntries().get(0).getAuthors().get(0), "Γιώργος Περπερ" );	
 	}
 
 	public void testParseDatesTrue() throws XmlPullParserException, IOException {
