@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gr.dsigned</groupId>
     <artifactId>alapl</artifactId>
-    <version>0.6-SNAPSHOT</version>
+    <version>0.5</version>
     <packaging>jar</packaging>
     <name>alapl</name>
     <url>http://github.com/nikosk/ALAPL</url>
