@@ -7,8 +7,8 @@ import java.util.List;
 public class AtomFeed {
 
     private String id;
-    private String mURL;
-    private String mTitle;
+    private String alternateURL;
+    private String feedTitle;
     private String subtitle;
     private String icon;
     private Date updated;
@@ -19,20 +19,20 @@ public class AtomFeed {
         this.entries = new ArrayList<AtomEntry>();
     }
 
-    public String getmURL() {
-        return mURL;
+    public String getAlternateURL() {
+        return alternateURL;
     }
 
-    public void setmURL(String mURL) {
-        this.mURL = mURL;
+    public void setAlternateURL(String alternateURL) {
+        this.alternateURL = alternateURL;
     }
 
-    public String getmTitle() {
-        return mTitle;
+    public String getFeedTitle() {
+        return feedTitle;
     }
 
-    public void setmTitle(String mTitle) {
-        this.mTitle = mTitle;
+    public void setFeedTitle(String feedTitle) {
+        this.feedTitle = feedTitle;
     }
 
     public List<AtomEntry> getEntries() {
