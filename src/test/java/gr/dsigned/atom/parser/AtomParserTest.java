@@ -18,6 +18,7 @@ public class AtomParserTest extends TestCase {
 		URL url = new URL("http://feeds.huffingtonpost.com/huffingtonpost/raw_feed");
 		AtomFeed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
+		assertNotNull(feed.getAlternateURL());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getPublished() == null);
 		assertTrue(feed.getEntries().get(0).getPublishedString() != null);
@@ -31,6 +32,7 @@ public class AtomParserTest extends TestCase {
 		URL url = new URL("http://sport24.gr/?widget=rssfeed&view=feed&contentId=174866");
 		AtomFeed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
+		assertNotNull(feed.getAlternateURL());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getPublished() == null);
 		assertTrue(feed.getEntries().get(0).getPublishedString() != null);
@@ -44,6 +46,7 @@ public class AtomParserTest extends TestCase {
 		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		AtomFeed feed = parser.parse(in);
 		assertNotNull(feed);
+		assertNotNull(feed.getAlternateURL());
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
@@ -57,6 +60,7 @@ public class AtomParserTest extends TestCase {
 		URL url = new URL("http://feeds.huffingtonpost.com/huffingtonpost/raw_feed");
 		AtomFeed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
+		assertNotNull(feed.getAlternateURL());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getPublished() != null);
 		assertTrue(feed.getEntries().get(0).getPublishedString() != null);
@@ -70,6 +74,7 @@ public class AtomParserTest extends TestCase {
 		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		AtomFeed feed = parser.parse(in);
 		assertNotNull(feed);
+		assertNotNull(feed.getAlternateURL());
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
@@ -83,7 +88,7 @@ public class AtomParserTest extends TestCase {
 		in = this.getClass().getResource("AtomTestFeed.xml").openStream();		
 		AtomFeed feed = parser.parse(in, 5000);
 		assertNotNull(feed);
-		System.out.println(feed);
+		assertNotNull(feed.getAlternateURL());
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);

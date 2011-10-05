@@ -73,11 +73,11 @@ public class AtomParser {
 			if (eventType == XmlPullParser.START_TAG) {
 				String startTag = parser.getName();
 				if (TITLE_TAG.equals(startTag)) {
-					feed.setmTitle(parser.nextText());
+					feed.setFeedTitle(parser.nextText());
 				} else if (LINK_TAG.equals(startTag)) {
 					getAttributeMap(parser);
-					if (attMap.containsKey("alternate")) {
-						feed.setmURL(attMap.get("href"));
+					if (attMap.containsKey("rel") && attMap.get("rel").equals("alternate")) {
+						feed.setAlternateURL(attMap.get("href"));
 					}
 				} else if (SUBTITLE_TAG.equals(startTag)) {
 					feed.setSubtitle(parser.nextText());
