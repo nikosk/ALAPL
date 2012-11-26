@@ -2,8 +2,8 @@
 <metadata>
   <groupId>gr.dsigned</groupId>
   <artifactId>alapl</artifactId>
-  <version>0.4.2-SNAPSHOT</version>
   <versioning>
+    <release>0.8</release>
     <versions>
       <version>0.4.2-SNAPSHOT</version>
       <version>0.4.2</version>
@@ -11,7 +11,8 @@
       <version>0.5</version>
       <version>0.6</version>
       <version>0.7</version>
+      <version>0.8</version>
     </versions>
-    <lastUpdated>20111005104251</lastUpdated>
+    <lastUpdated>20121126151650</lastUpdated>
   </versioning>
 </metadata>
