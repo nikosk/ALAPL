@@ -13,6 +13,7 @@ public class AtomFeed {
     private String icon;
     private Date updated;
     private String updatedString;
+    private List<AtomLink> links;
     private List<AtomEntry> entries;
 
     public AtomFeed() {
@@ -85,5 +86,13 @@ public class AtomFeed {
 
     public void setUpdatedString(String updatedString) {
         this.updatedString = updatedString;
+    }
+
+    public List<AtomLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<AtomLink> links) {
+        this.links = links;
     }
 }

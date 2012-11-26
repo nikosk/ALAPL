@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gr.dsigned</groupId>
     <artifactId>alapl</artifactId>
-    <version>0.7</version>
+    <version>0.8</version>
     <packaging>jar</packaging>
     <name>alapl</name>
     <url>http://github.com/nikosk/ALAPL</url>
@@ -22,7 +22,7 @@
         <repository>
             <id>repo</id>
             <url>https://github.com/nikosk/ALAPL/raw/master/releases</url>
-        </repository>        
+        </repository>
     </distributionManagement>
     <organization>
         <name>dsigned.gr</name>
@@ -38,7 +38,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            
+
         </plugins>
     </build>
     <dependencies>

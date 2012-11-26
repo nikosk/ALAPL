@@ -1,14 +1,12 @@
 package gr.dsigned.atom.parser;
 
 import gr.dsigned.atom.domain.AtomFeed;
+import junit.framework.TestCase;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-import junit.framework.TestCase;
-
-import org.xmlpull.v1.XmlPullParserException;
 
 public class AtomParserTest extends TestCase {
 
@@ -18,6 +16,7 @@ public class AtomParserTest extends TestCase {
 		URL url = new URL("http://feeds.huffingtonpost.com/huffingtonpost/raw_feed");
 		AtomFeed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
+        assertNotNull(feed.getLinks());
 		assertNotNull(feed.getAlternateURL());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getPublished() == null);
@@ -32,6 +31,7 @@ public class AtomParserTest extends TestCase {
 		URL url = new URL("http://sport24.gr/?widget=rssfeed&view=feed&contentId=174866");
 		AtomFeed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
+        assertNotNull(feed.getLinks());
 		assertNotNull(feed.getAlternateURL());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getPublished() == null);
@@ -39,19 +39,21 @@ public class AtomParserTest extends TestCase {
 		assertTrue(feed.getEntries().get(0).getUpdated() == null);
 		assertTrue(feed.getEntries().get(0).getUpdatedString() != null);
 	}
-	
+
 	public void testParseFile() throws XmlPullParserException, IOException {
 		AtomParser parser = new AtomParser();
 		parser.setParseDates(false);
 		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		AtomFeed feed = parser.parse(in);
 		assertNotNull(feed);
+        assertNotNull(feed.getLinks());
+        assertEquals(feed.getLinks().size(), 2);
 		assertNotNull(feed.getAlternateURL());
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getCatogories().size() > 0);
-		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);		
-		assertEquals(feed.getEntries().get(0).getAuthors().get(0), "Γιώργος Περπερ" );	
+		assertTrue(feed.getEntries().get(0).getLinks().size() > 0);
+		assertEquals(feed.getEntries().get(0).getAuthors().get(0), "Γιώργος Περπερ" );
 	}
 
 	public void testParseDatesTrue() throws XmlPullParserException, IOException {
@@ -60,6 +62,7 @@ public class AtomParserTest extends TestCase {
 		URL url = new URL("http://feeds.huffingtonpost.com/huffingtonpost/raw_feed");
 		AtomFeed feed = parser.parse(url.openConnection().getInputStream());
 		assertNotNull(feed);
+        assertNotNull(feed.getLinks());
 		assertNotNull(feed.getAlternateURL());
 		assertTrue(feed.getEntries().size() > 0);
 		assertTrue(feed.getEntries().get(0).getPublished() != null);
@@ -74,6 +77,8 @@ public class AtomParserTest extends TestCase {
 		InputStream in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		AtomFeed feed = parser.parse(in);
 		assertNotNull(feed);
+        assertEquals(feed.getLinks().size(), 2);
+        assertNotNull(feed.getLinks());
 		assertNotNull(feed.getAlternateURL());
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
@@ -85,9 +90,11 @@ public class AtomParserTest extends TestCase {
 		AtomParser parser = new AtomParser();
 		InputStream in = new DelayingInputStream();
 		assertNull(parser.parse(in, 100));
-		in = this.getClass().getResource("AtomTestFeed.xml").openStream();		
+		in = this.getClass().getResource("AtomTestFeed.xml").openStream();
 		AtomFeed feed = parser.parse(in, 5000);
 		assertNotNull(feed);
+        assertEquals(feed.getLinks().size(), 2);
+        assertNotNull(feed.getLinks());
 		assertNotNull(feed.getAlternateURL());
 		assertNotNull(feed.getEntries());
 		assertTrue(feed.getEntries().size() > 0);
