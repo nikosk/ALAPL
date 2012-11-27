@@ -14,10 +14,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.*;
 
 public class AtomParser {
 
-    private AtomFeed feed = new AtomFeed();
+    private AtomFeed feed;
+    private static final ExecutorService executor = Executors.newFixedThreadPool(3);
     private boolean parseDates = true;
     private final HashMap<String, String> attMap = new HashMap<String, String>();
     protected static final SimpleDateFormat ISO8601_DATE_FORMATS[] = new SimpleDateFormat[]{new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz"), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")};
@@ -38,18 +40,28 @@ public class AtomParser {
     private static final String AUTHOR_TAG = "author";
     private static final String NAME_TAG = "name";
 
-    public AtomFeed parse(InputStream in, long timeOut) {
-        AtomParserTimeOut apt = new AtomParserTimeOut(in);
-        new Thread(apt).start();
-        long startTime = System.currentTimeMillis();
-        long elapsedTime = System.currentTimeMillis();
-        while (apt.getFeed() == null && elapsedTime - startTime < timeOut) {
-            elapsedTime = System.currentTimeMillis();
+    public AtomFeed parse(final InputStream in, long timeOut) {
+
+        Callable<AtomFeed> task = new Callable<AtomFeed>() {
+            public AtomFeed call() throws IOException, XmlPullParserException {
+                AtomParser parser = new AtomParser();
+                return parser.parse(in);
+            }
+        };
+        AtomFeed result = null;
+        Future<AtomFeed> future = executor.submit(task);
+        try {
+            result = future.get(timeOut, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            future.cancel(true);
         }
-        return apt.getFeed();
+        return result;
     }
 
     public AtomFeed parse(InputStream in) throws XmlPullParserException, IOException {
+        feed = new AtomFeed();
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         factory.setNamespaceAware(true);
         XmlPullParser parser = factory.newPullParser();
