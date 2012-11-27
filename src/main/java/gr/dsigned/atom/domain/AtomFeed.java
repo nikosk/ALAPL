@@ -18,6 +18,7 @@ public class AtomFeed {
 
     public AtomFeed() {
         this.entries = new ArrayList<AtomEntry>();
+        this.links = new ArrayList<AtomLink>();
     }
 
     public String getAlternateURL() {
